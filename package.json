@@ -1,0 +1,48 @@
+{
+  "name": "react-tic-tac-toe",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "tsc --build && react-scripts start & tsc --build --watch",
+    "build": "react-scripts build",
+    "test": "jest -c jest.config.json --verbose",
+    "eject": "react-scripts eject",
+    "prettier:write": "prettier --write \"{src,__test__}/**/*.{js,jsx,ts,tsx}\""
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-scripts": "3.2.0",
+    "typescript": "3.7.2"
+  },
+  "devDependencies": {
+    "@types/enzyme": "^3.10.3",
+    "@types/jest": "^24.0.22",
+    "@types/node": "12.7.8",
+    "@types/react": "16.9.4",
+    "@types/react-dom": "16.9.1",
+    "@types/react-google-login-component": "^0.9.0",
+    "@types/react-router-dom": "^5.1.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "enzyme-to-json": "^3.4.2",
+    "jest-watch-typeahead": "0.3.1",
+    "prettier": "^1.18.2",
+    "ts-jest": "^24.1.0"
+  }
+}
