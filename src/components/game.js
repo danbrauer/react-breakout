@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Layer, Circle, Rect } from "react-konva";
+import {Layer, Circle, Rect, Group} from "react-konva";
 import Field from "./field";
 import Ball from "./ball";
 import Paddle from "./paddle";
 import Konva from "konva";
+import Brick from "./brick";
 
 export default class Game extends Component {
 
@@ -18,7 +19,13 @@ export default class Game extends Component {
             paddleY: 50,
             paddleOffset: 50,
             ballSpeed: 15,
-            ballRadius: 10
+            ballRadius: 10,
+            brickWidth: 380,
+            brickHeight: 10,
+            bricks: [
+                { key: 1, x: 10, y: 10 },
+                { key: 2, x: 10, y: 20 }
+            ]
         }
     };
 
@@ -29,7 +36,23 @@ export default class Game extends Component {
         });
     };
 
+    paddleCollision = () => {
+
+    };
+
+
+
     render() {
+
+        const bricks = this.state.bricks.map(b => {
+            return <Brick
+                brickWidth={this.state.brickWidth}
+                brickHeight={this.state.brickHeight}
+                brickX={b.x}
+                brickY={b.y}
+            />
+        });
+
         return (
             <Layer
                 onMouseMove={(e) => this._onMouseMove(e)}
@@ -56,6 +79,7 @@ export default class Game extends Component {
                     paddleWidth={this.state.paddleWidth}
                     paddleHeight={this.state.paddleHeight}
                 />
+                <Group>{bricks}</Group>
             </Layer>
         );
     }

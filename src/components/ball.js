@@ -22,7 +22,7 @@ export default class Ball extends PureComponent {
         this.setState({ direction: { x, y } });
         this.animate();
     }
-
+    
     newDirectionIfPaddleHitOccurs = (
         ballX, deltaX, ballY, deltaY,
         paddleLeft, paddleRight, paddleTop, paddleBottom
