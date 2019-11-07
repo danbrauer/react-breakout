@@ -27,12 +27,11 @@ export default class Paddle extends PureComponent {
         const { color, x } = this.state;
         return (
             <Rect
-                // onMouseMove={(e) => this._onMouseMove(e)}
                 ref={comp => {
                     this.paddle = comp;
                 }}
                 x={x}
-                y={this.props.fieldHeight - 50}
+                y={this.props.paddleY}
                 width={this.props.paddleWidth}
                 height={this.props.paddleHeight}
                 fill={color}

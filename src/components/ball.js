@@ -11,18 +11,31 @@ export default class Ball extends PureComponent {
         color: Konva.Util.getRandomColor(),
         MAX_X: this.props.fieldWidth - this.MIN_X,
         MAX_Y: this.props.fieldHeight - this.MIN_Y,
-        SPEED: 30,
-        x: this.MIN_X,
-        y: this.MIN_Y,
+        x: this.props.paddleX,
+        y: this.props.paddleY,
         direction: { x: 0, y: 0 }
     };
 
     componentDidMount() {
-        const x = Math.floor(Math.random() * this.state.SPEED);
-        const y = this.state.SPEED - x;
+        const x = Math.floor(Math.random() * this.props.ballSpeed);
+        const y = this.props.ballSpeed - x;
         this.setState({ direction: { x, y } });
         this.animate();
     }
+
+    newDirectionIfPaddleHitOccurs = (
+        ballX, deltaX, ballY, deltaY,
+        paddleLeft, paddleRight, paddleTop, paddleBottom
+    ) => {
+        let newDeltaY = deltaY;
+        // console.log(`ballX ${ballX}, deltaX ${deltaX}, ballY ${ballY}, deltaY ${deltaY}, paddleLeft ${paddleLeft}, paddleRight ${paddleRight}, paddleTop ${paddleTop}, paddleBottom ${paddleBottom}`);
+
+        if (ballX >= paddleLeft && ballX <= paddleRight && ballY >= paddleBottom && ballY <= paddleTop ) {
+            console.log("************************HIT");
+            newDeltaY = -deltaY;
+        }
+        return newDeltaY;
+    };
 
     newCoord = (val, delta, max, min) => {
         let newVal = val + delta;
@@ -46,8 +59,14 @@ export default class Ball extends PureComponent {
         const { direction, x, y } = this.state;
 
         if (direction.x !== 0 || direction.y !== 0) {
+            const newYDir = this.newDirectionIfPaddleHitOccurs(
+                x, direction.x, y, direction.y,
+                this.props.paddleX, (this.props.paddleX + this.props.paddleWidth),
+                (this.props.paddleY + this.props.paddleHeight), this.props.paddleY
+            );
+
             const newX = this.newCoord(x, direction.x, this.state.MAX_X, this.MIN_X);
-            const newY = this.newCoord(y, direction.y, this.state.MAX_Y, this.MIN_Y);
+            const newY = this.newCoord(y, newYDir, this.state.MAX_Y, this.MIN_Y);
 
             this.setState({
                 x: newX.val,
@@ -72,7 +91,7 @@ export default class Ball extends PureComponent {
                 }}
                 x={x}
                 y={y}
-                radius={20}
+                radius={this.props.ballRadius}
                 fill={color}
                 shadowBlur={1}
             />

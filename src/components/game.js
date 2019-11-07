@@ -12,15 +12,18 @@ export default class Game extends Component {
         this.state = {
             fieldWidth: 400,
             fieldHeight: 400,
-            paddleWidth: 40,
+            paddleWidth: 60,
             paddleHeight: 10,
             paddleX: 0,
             paddleY: 50,
+            paddleOffset: 50,
+            ballSpeed: 15,
+            ballRadius: 10
         }
     };
 
     _onMouseMove = ({ evt }) => {
-        console.log("event e.evt.clientX", evt.clientX);
+        // console.log("event e.evt.clientX", evt.clientX);
         this.setState({
             paddleX: evt.clientX
         });
@@ -36,14 +39,20 @@ export default class Game extends Component {
                     fieldHeight={this.state.fieldHeight}
                 />
                 <Ball
+                    ballSpeed={this.state.ballSpeed}
+                    ballRadius={this.state.ballRadius}
                     fieldWidth={this.state.fieldWidth}
                     fieldHeight={this.state.fieldHeight}
+                    paddleX={this.state.paddleX}
+                    paddleY={this.state.fieldHeight - this.state.paddleOffset}
+                    paddleWidth={this.state.paddleWidth}
+                    paddleHeight={this.state.paddleHeight}
                 />
                 <Paddle
                     fieldWidth={this.state.fieldWidth}
                     fieldHeight={this.state.fieldHeight}
                     paddleX={this.state.paddleX}
-                    paddleY={this.state.paddleY}
+                    paddleY={this.state.fieldHeight - this.state.paddleOffset}
                     paddleWidth={this.state.paddleWidth}
                     paddleHeight={this.state.paddleHeight}
                 />
