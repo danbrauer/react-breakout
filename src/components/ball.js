@@ -1,25 +1,25 @@
 import React, { PureComponent } from "react";
 import Konva from "konva";
 import { Circle } from "react-konva";
-import { WIDTH, HEIGHT } from "./field";
-
-const MIN_X = 12,
-    MIN_Y = 12,
-    MAX_X = WIDTH - MIN_X,
-    MAX_Y = HEIGHT - MIN_Y,
-    SPEED = 30;
 
 export default class Ball extends PureComponent {
+
+    MIN_X = 12;
+    MIN_Y = 12;
+
     state = {
         color: Konva.Util.getRandomColor(),
-        x: MIN_X,
-        y: MIN_Y,
+        MAX_X: this.props.fieldWidth - this.MIN_X,
+        MAX_Y: this.props.fieldHeight - this.MIN_Y,
+        SPEED: 30,
+        x: this.MIN_X,
+        y: this.MIN_Y,
         direction: { x: 0, y: 0 }
     };
 
     componentDidMount() {
-        const x = Math.floor(Math.random() * SPEED);
-        const y = SPEED - x;
+        const x = Math.floor(Math.random() * this.state.SPEED);
+        const y = this.state.SPEED - x;
         this.setState({ direction: { x, y } });
         this.animate();
     }
@@ -46,8 +46,8 @@ export default class Ball extends PureComponent {
         const { direction, x, y } = this.state;
 
         if (direction.x !== 0 || direction.y !== 0) {
-            const newX = this.newCoord(x, direction.x, MAX_X, MIN_X);
-            const newY = this.newCoord(y, direction.y, MAX_Y, MIN_Y);
+            const newX = this.newCoord(x, direction.x, this.state.MAX_X, this.MIN_X);
+            const newY = this.newCoord(y, direction.y, this.state.MAX_Y, this.MIN_Y);
 
             this.setState({
                 x: newX.val,

@@ -1,11 +1,6 @@
 import React, { PureComponent } from "react";
 import {Circle, Group, Rect} from "react-konva";
-import { WIDTH, HEIGHT } from "./field";
 import Konva from "konva";
-
-export const PADDLE_WIDTH = 40;
-export const PADDLE_HEIGHT = 10;
-export const PADDLE_Y = HEIGHT - 50;
 
 export default class Paddle extends PureComponent {
 
@@ -21,13 +16,8 @@ export default class Paddle extends PureComponent {
     }
 
     animate = () => {
-        const { x } = this.state;
-        let newX = x + 1; // default, move one pixel...
-        if (this.props.xCoord)
-            newX = this.props.xCoord
-
         this.setState({
-            x: newX
+            x: this.props.paddleX
         });
 
         this.animationTimeout = setTimeout(this.animate, 50);
@@ -42,9 +32,9 @@ export default class Paddle extends PureComponent {
                     this.paddle = comp;
                 }}
                 x={x}
-                y={PADDLE_Y}
-                width={PADDLE_WIDTH}
-                height={PADDLE_HEIGHT}
+                y={this.props.fieldHeight - 50}
+                width={this.props.paddleWidth}
+                height={this.props.paddleHeight}
                 fill={color}
             />
         );

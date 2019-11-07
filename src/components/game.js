@@ -10,14 +10,19 @@ export default class Game extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            mouseX: 10
+            fieldWidth: 400,
+            fieldHeight: 400,
+            paddleWidth: 40,
+            paddleHeight: 10,
+            paddleX: 0,
+            paddleY: 50,
         }
     };
 
     _onMouseMove = ({ evt }) => {
         console.log("event e.evt.clientX", evt.clientX);
         this.setState({
-            mouseX: evt.clientX
+            paddleX: evt.clientX
         });
     };
 
@@ -26,10 +31,21 @@ export default class Game extends Component {
             <Layer
                 onMouseMove={(e) => this._onMouseMove(e)}
             >
-                <Field />
-                <Ball />
+                <Field
+                    fieldWidth={this.state.fieldWidth}
+                    fieldHeight={this.state.fieldHeight}
+                />
+                <Ball
+                    fieldWidth={this.state.fieldWidth}
+                    fieldHeight={this.state.fieldHeight}
+                />
                 <Paddle
-                    xCoord={this.state.mouseX}
+                    fieldWidth={this.state.fieldWidth}
+                    fieldHeight={this.state.fieldHeight}
+                    paddleX={this.state.paddleX}
+                    paddleY={this.state.paddleY}
+                    paddleWidth={this.state.paddleWidth}
+                    paddleHeight={this.state.paddleHeight}
                 />
             </Layer>
         );
