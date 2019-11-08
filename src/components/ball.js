@@ -11,7 +11,7 @@ export default class Ball extends PureComponent {
                 }}
                 x={x}
                 y={y}
-                radius={this.props.ballRadius}
+                radius={this.props.radius}
                 fill={color}
                 shadowBlur={1}
             />
@@ -19,7 +19,7 @@ export default class Ball extends PureComponent {
     };
 
     render() {
-        return this.renderBall(this.props.ballXCoord, this.props.ballYCoord, this.props.ballColor );
+        return this.renderBall(this.props.x, this.props.y, this.props.color );
     }
 
 }
