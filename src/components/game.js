@@ -4,7 +4,7 @@ import { Field } from "./field";
 import { Ball, updateBallLocation } from "./ball";
 import { Paddle, updatePaddleLocation } from "./paddle";
 import Konva from "konva";
-import { Brick } from "./brick";
+import { Brick, bricksInitialize } from "./brick";
 
 export default class Game extends Component {
 
@@ -26,9 +26,6 @@ export default class Game extends Component {
     BALL_SPEED = 10;
     BALL_RADIUS = 10;
 
-    BRICK_WIDTH = 380;
-    BRICK_HEIGHT = 10;
-
     constructor(props) {
         super(props);
         this.state = {
@@ -42,7 +39,7 @@ export default class Game extends Component {
                 y: 0
             },
 
-            bricks: this.bricksInitialize()
+            bricks: bricksInitialize()
         }
     };
 
@@ -65,16 +62,9 @@ export default class Game extends Component {
         this.animationTimeout = setTimeout(this.ballAnimate, 50);
     };
 
-    bricksInitialize = () => {
-        return [
-            { key: 1, x: 10, y: 10, width: this.BRICK_WIDTH, height: this.BRICK_HEIGHT, color: Konva.Util.getRandomColor() },
-            { key: 2, x: 10, y: 20, width: this.BRICK_WIDTH, height: this.BRICK_HEIGHT, color: Konva.Util.getRandomColor() }
-        ];
-    };
-
     // returns one brick, if collision occured; null otherwise
     determineBallBrickCollision = (bricks, ballX, ballY) => {
-        for (var i=0; i < bricks.length; i++) {
+        for (let i=0; i < bricks.length; i++) {
             const brick = bricks[i];
             const brickLeft = brick.x;
             const brickRight = brick.x + brick.width;
