@@ -2,34 +2,56 @@ import React from "react";
 import {Rect} from "react-konva";
 import Konva from "konva";
 
-const BRICK_OFFSET = 20;
-const BRICK_WIDTH = 42;
-const BRICK_HEIGHT = 10;
-const NUMBER_OF_ROWS = 4;
+const randomNum = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
+const brickWidths = (totalRowWidth, minBrickWidth, maxBrickWidth ) => {
+    let widths = [];
+    let remainingWidth = totalRowWidth;
+    while (remainingWidth >= minBrickWidth) {
+        let newWidth;
+        if (remainingWidth >= maxBrickWidth) {
+            newWidth = randomNum(minBrickWidth, maxBrickWidth);
+        } else {
+            newWidth = randomNum(minBrickWidth, remainingWidth);
+        }
+        widths = [...widths, newWidth ];
+        remainingWidth -= newWidth;
+    }
 
-// const MIN_WIDTH = 20;
-// const MAX_WIDTH = 70;
-// const width = () => Math.floor(Math.random() * (MAX_WIDTH - MIN_WIDTH + 1) + MIN_WIDTH);
-//
-// // returns a row of bricks
-// const rowOfBricks = (rowMaxWidth, brickWidthFunc = this.width) => {
-//
-// };
+    // for the remaining, just add it to a random brick in the row
+    // it's an easy way to avoid having tiny bricks (smaller than the min)
+    const idx = randomNum(0, widths.length-1);
+    widths[idx] = widths[idx] + remainingWidth;
 
+    return widths;
+};
 
-const rowOfBricks = (rowNum) => {
+const rowOfBricks = (rowYCoord, totalRowWidth,
+                     minBrickWidth, maxBrickWidth, bricksOffset, brickHeight,
+                     widthsFunc = brickWidths ) => {
+
+    const calculateBrickXCoord = () => {
+        let newX = 10; // init value
+        if (bricks.length > 0) {
+            const priorBrick = bricks[bricks.length-1];
+            newX = priorBrick.x + priorBrick.width;
+        }
+        return newX;
+    };
+
+    const widths = widthsFunc(totalRowWidth, minBrickWidth, maxBrickWidth);
     let bricks = [];
     let i = 0;
-    const x = () => bricks.length > 0 ? bricks[bricks.length-1].x + BRICK_WIDTH : 10;
-
-    while (i < 9) {
+    while (i < widths.length) {
+        const x = calculateBrickXCoord();
+        const y = rowYCoord;
+        const key = `${y}.${x}`; // key ought to be unique so concat y & x coords
         const brick = {
-            key: (rowNum * 10) + i,
-            x: x(),
-            y: (rowNum * BRICK_HEIGHT) + BRICK_OFFSET,
-            width: BRICK_WIDTH,
-            height: BRICK_HEIGHT,
+            key,
+            x,
+            y,
+            width: widths[i],
+            height: brickHeight,
             color: Konva.Util.getRandomColor()
         };
         bricks = [...bricks, brick];
@@ -39,10 +61,21 @@ const rowOfBricks = (rowNum) => {
 };
 
 const bricksInitialize = () => {
+
+    const MIN_WIDTH = 20;
+    const MAX_WIDTH = 70;
+    const TOTAL_ROW_WIDTH = 380;
+    const BRICK_OFFSET = 20;
+    const BRICK_HEIGHT = 10;
+    const NUMBER_OF_ROWS = 4;
+
     let bricks = [];
     let i = 1;
     while (i <= NUMBER_OF_ROWS) {
-        bricks = [...bricks, ...rowOfBricks(i)];
+        const rowYCoord = (i * BRICK_HEIGHT) + BRICK_OFFSET;
+        bricks = [
+            ...bricks,
+            ...rowOfBricks(rowYCoord, TOTAL_ROW_WIDTH, MIN_WIDTH, MAX_WIDTH, BRICK_OFFSET, BRICK_HEIGHT)];
         i++;
     }
     return bricks;
@@ -55,6 +88,7 @@ const Brick = (props) => (
         width={props.width}
         height={props.height}
         fill={props.color}
+        shadowBlur={1}
     />);
 
 export {
