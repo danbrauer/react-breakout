@@ -23,7 +23,7 @@ export default class Game extends Component {
     BALL_MAX_X = this.FIELD_WIDTH - this.BALL_MIN_X;
     BALL_MAX_Y = this.FIELD_HEIGHT - this.BALL_MIN_Y;
     BALL_COLOR = Konva.Util.getRandomColor();
-    BALL_SPEED = 10;
+    BALL_SPEED = 15;
     BALL_RADIUS = 10;
 
     constructor(props) {
