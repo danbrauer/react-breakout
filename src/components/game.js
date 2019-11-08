@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {Layer, Group} from "react-konva";
-import Field from "./field";
+import { Field } from "./field";
 import { Ball } from "./ball";
 import { Paddle } from "./paddle";
 import Konva from "konva";
@@ -154,8 +154,8 @@ export default class Game extends Component {
                 onMouseMove={(e) => this._onMouseMove(e)}
             >
                 <Field
-                    fieldWidth={this.FIELD_WIDTH}
-                    fieldHeight={this.FIELD_HEIGHT}
+                    width={this.FIELD_WIDTH}
+                    height={this.FIELD_HEIGHT}
                 />
                 <Ball
                     color={this.BALL_COLOR}
