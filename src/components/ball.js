@@ -4,13 +4,8 @@ import { Circle } from "react-konva";
 
 export default class Ball extends PureComponent {
 
-    MIN_X = 12;
-    MIN_Y = 12;
-
     state = {
         color: Konva.Util.getRandomColor(),
-        MAX_X: this.props.fieldWidth - this.MIN_X,
-        MAX_Y: this.props.fieldHeight - this.MIN_Y,
         x: this.props.paddleX,
         y: this.props.paddleY,
         direction: { x: 0, y: 0 }
@@ -28,8 +23,6 @@ export default class Ball extends PureComponent {
         paddleLeft, paddleRight, paddleTop, paddleBottom
     ) => {
         let newDeltaY = deltaY;
-        // console.log(`ballX ${ballX}, deltaX ${deltaX}, ballY ${ballY}, deltaY ${deltaY}, paddleLeft ${paddleLeft}, paddleRight ${paddleRight}, paddleTop ${paddleTop}, paddleBottom ${paddleBottom}`);
-
         if (ballX >= paddleLeft && ballX <= paddleRight && ballY >= paddleBottom && ballY <= paddleTop ) {
             console.log("************************HIT");
             newDeltaY = -deltaY;
@@ -65,8 +58,8 @@ export default class Ball extends PureComponent {
                 (this.props.paddleY + this.props.paddleHeight), this.props.paddleY
             );
 
-            const newX = this.newCoord(x, direction.x, this.state.MAX_X, this.MIN_X);
-            const newY = this.newCoord(y, newYDir, this.state.MAX_Y, this.MIN_Y);
+            const newX = this.newCoord(x, direction.x, this.props.ballMaxX, this.props.ballMinY);
+            const newY = this.newCoord(y, newYDir, this.props.ballMaxY, this.props.ballMinY);
 
             this.setState({
                 x: newX.val,

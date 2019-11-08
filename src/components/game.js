@@ -8,11 +8,18 @@ import Brick from "./brick";
 
 export default class Game extends Component {
 
+    FIELD_WIDTH = 400;
+    FIELD_HEIGHT = 400;
+    BALL_MIN_X = 12;
+    BALL_MIN_Y = 12;
+    BALL_MAX_X = this.FIELD_WIDTH - this.BALL_MIN_X;
+    BALL_MAX_Y = this.FIELD_HEIGHT - this.BALL_MIN_Y;
+
     constructor(props) {
         super(props);
         this.state = {
-            fieldWidth: 400,
-            fieldHeight: 400,
+            fieldWidth: this.FIELD_WIDTH,
+            fieldHeight: this.FIELD_HEIGHT,
             paddleWidth: 60,
             paddleHeight: 10,
             paddleX: 0,
@@ -64,12 +71,14 @@ export default class Game extends Component {
                 <Ball
                     ballSpeed={this.state.ballSpeed}
                     ballRadius={this.state.ballRadius}
-                    fieldWidth={this.state.fieldWidth}
-                    fieldHeight={this.state.fieldHeight}
                     paddleX={this.state.paddleX}
                     paddleY={this.state.fieldHeight - this.state.paddleOffset}
                     paddleWidth={this.state.paddleWidth}
                     paddleHeight={this.state.paddleHeight}
+                    ballMinX={this.BALL_MIN_X}
+                    ballMinY={this.BALL_MIN_Y}
+                    ballMaxX={this.BALL_MAX_X}
+                    ballMaxY={this.BALL_MAX_Y}
                 />
                 <Paddle
                     fieldWidth={this.state.fieldWidth}
