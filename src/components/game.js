@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {Layer, Group} from "react-konva";
 import Field from "./field";
 import { Ball } from "./ball";
-import Paddle from "./paddle";
+import { Paddle } from "./paddle";
 import Konva from "konva";
 import Brick from "./brick";
 
@@ -14,6 +14,7 @@ export default class Game extends Component {
     PADDLE_WIDTH = 60;
     PADDLE_HEIGHT = 10;
     PADDLE_OFFSET = 50;
+    PADDLE_COLOR = Konva.Util.getRandomColor();
 
     BALL_MIN_X = 12;
     BALL_MIN_Y = 12;
@@ -109,14 +110,6 @@ export default class Game extends Component {
         this.animationTimeout = setTimeout(this.ballAnimate, 50);
     };
 
-    //////////////// BALL ANIMATION END
-
-
-
-
-
-
-
 
 
 
@@ -171,12 +164,11 @@ export default class Game extends Component {
                     y={this.state.ballYCoord}
                 />
                 <Paddle
-                    fieldWidth={this.state.fieldWidth}
-                    fieldHeight={this.state.fieldHeight}
-                    paddleX={this.state.paddleX}
-                    paddleY={this.state.paddleY}
-                    paddleWidth={this.PADDLE_WIDTH}
-                    paddleHeight={this.PADDLE_HEIGHT}
+                    color={this.PADDLE_COLOR}
+                    x={this.state.paddleX}
+                    y={this.state.paddleY}
+                    width={this.PADDLE_WIDTH}
+                    height={this.PADDLE_HEIGHT}
                 />
                 <Group>{bricks}</Group>
             </Layer>
