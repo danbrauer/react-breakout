@@ -107,7 +107,7 @@ export default class Game extends Component {
             })
         }
     };
-    
+
 
     componentDidMount() {
         const x = this.state.paddleX;
