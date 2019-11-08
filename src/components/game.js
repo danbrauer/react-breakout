@@ -4,7 +4,7 @@ import { Field } from "./field";
 import { Ball, updateBallLocation } from "./ball";
 import { Paddle, updatePaddleLocation } from "./paddle";
 import Konva from "konva";
-import Brick from "./brick";
+import { Brick } from "./brick";
 
 export default class Game extends Component {
 
@@ -42,8 +42,8 @@ export default class Game extends Component {
             brickWidth: 380,
             brickHeight: 10,
             bricks: [
-                { key: 1, x: 10, y: 10 },
-                { key: 2, x: 10, y: 20 }
+                { key: 1, x: 10, y: 10, color: Konva.Util.getRandomColor() },
+                { key: 2, x: 10, y: 20, color: Konva.Util.getRandomColor() }
             ]
         }
     };
@@ -95,10 +95,12 @@ export default class Game extends Component {
 
         const bricks = this.state.bricks.map(b => {
             return <Brick
-                brickWidth={this.state.brickWidth}
-                brickHeight={this.state.brickHeight}
-                brickX={b.x}
-                brickY={b.y}
+                key={b.key}
+                width={this.state.brickWidth}
+                height={this.state.brickHeight}
+                x={b.x}
+                y={b.y}
+                color={b.color}
             />
         });
 
