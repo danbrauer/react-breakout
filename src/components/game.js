@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {Layer, Group} from "react-konva";
 import Field from "./field";
-import Ball from "./ball";
+import { Ball } from "./ball";
 import Paddle from "./paddle";
 import Konva from "konva";
 import Brick from "./brick";
