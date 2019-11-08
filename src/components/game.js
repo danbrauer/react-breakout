@@ -10,11 +10,13 @@ export default class Game extends Component {
 
     FIELD_WIDTH = 400;
     FIELD_HEIGHT = 400;
+    FIELD_BORDER_WIDTH = 4;
 
     PADDLE_WIDTH = 60;
     PADDLE_HEIGHT = 10;
     PADDLE_OFFSET = 50;
     PADDLE_COLOR = Konva.Util.getRandomColor();
+    PADDLE_MAX_X = this.FIELD_WIDTH - this.PADDLE_WIDTH;
 
     BALL_MIN_X = 12;
     BALL_MIN_Y = 12;
@@ -49,10 +51,12 @@ export default class Game extends Component {
     _onMouseMove = ({ evt }) => {
         this.setState({
             ...this.state,
-            // paddle X coordinate matches mouse X coordinate
-            paddleX: evt.clientX
+            paddleX: this.paddleDetemineXCoord(evt.clientX)
         });
     };
+
+    paddleDetemineXCoord = (mouseXCoord) =>
+        (mouseXCoord > this.PADDLE_MAX_X) ? this.PADDLE_MAX_X : mouseXCoord;
 
     ballInvertYDirectionOnPaddleHit = (
         ballX, ballY, deltaY,
@@ -156,6 +160,7 @@ export default class Game extends Component {
                 <Field
                     width={this.FIELD_WIDTH}
                     height={this.FIELD_HEIGHT}
+                    borderWidth={this.FIELD_BORDER_WIDTH}
                 />
                 <Ball
                     color={this.BALL_COLOR}

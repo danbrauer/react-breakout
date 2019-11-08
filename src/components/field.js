@@ -15,8 +15,8 @@ export const Field = (props) => {
             <Rect
                 x={2}
                 y={2}
-                width={props.width - 4}
-                height={props.height - 4}
+                width={props.width - props.borderWidth}
+                height={props.height - props.borderWidth}
                 fill="rgb(255,255,255)"
             />
         </Group>
