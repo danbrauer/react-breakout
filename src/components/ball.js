@@ -1,30 +1,20 @@
 import React, { PureComponent } from "react";
-import Konva from "konva";
 import { Circle } from "react-konva";
 
 export default class Ball extends PureComponent {
 
     state = {
-        color: Konva.Util.getRandomColor(),
-        x: this.props.paddleX,
-        y: this.props.paddleY,
+        x: 0,
+        y: 0,
         direction: { x: 0, y: 0 }
     };
 
-    componentDidMount() {
-        const x = Math.floor(Math.random() * this.props.ballSpeed);
-        const y = this.props.ballSpeed - x;
-        this.setState({ direction: { x, y } });
-        this.animate();
-    }
-    
-    newDirectionIfPaddleHitOccurs = (
-        ballX, deltaX, ballY, deltaY,
+    paddleHit = (
+        ballX, ballY, deltaY,
         paddleLeft, paddleRight, paddleTop, paddleBottom
     ) => {
         let newDeltaY = deltaY;
         if (ballX >= paddleLeft && ballX <= paddleRight && ballY >= paddleBottom && ballY <= paddleTop ) {
-            console.log("************************HIT");
             newDeltaY = -deltaY;
         }
         return newDeltaY;
@@ -48,12 +38,21 @@ export default class Ball extends PureComponent {
         return { val: newVal, delta: newDelta };
     };
 
+    componentDidMount() {
+        const x = this.props.paddleX;
+        const y = this.props.paddleY;
+        const dirX = Math.floor(Math.random() * this.props.ballSpeed);
+        const dirY = this.props.ballSpeed - x;
+        this.setState({ x, y, direction: { x: dirX, y: dirY } });
+        this.animate();
+    }
+
     animate = () => {
         const { direction, x, y } = this.state;
 
         if (direction.x !== 0 || direction.y !== 0) {
-            const newYDir = this.newDirectionIfPaddleHitOccurs(
-                x, direction.x, y, direction.y,
+            const newYDir = this.paddleHit(
+                x, y, direction.y,
                 this.props.paddleX, (this.props.paddleX + this.props.paddleWidth),
                 (this.props.paddleY + this.props.paddleHeight), this.props.paddleY
             );
@@ -74,9 +73,7 @@ export default class Ball extends PureComponent {
         this.animationTimeout = setTimeout(this.animate, 50);
     };
 
-    render() {
-        const { color, x, y } = this.state;
-
+    renderBall = (x, y, color) => {
         return (
             <Circle
                 ref={comp => {
@@ -89,6 +86,11 @@ export default class Ball extends PureComponent {
                 shadowBlur={1}
             />
         );
+    };
+
+    render() {
+        const { x, y } = this.state;
+        return this.renderBall(x, y, this.props.ballColor );
     }
 
     componentWillUnmount() {

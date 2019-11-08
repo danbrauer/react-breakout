@@ -14,6 +14,7 @@ export default class Game extends Component {
     BALL_MIN_Y = 12;
     BALL_MAX_X = this.FIELD_WIDTH - this.BALL_MIN_X;
     BALL_MAX_Y = this.FIELD_HEIGHT - this.BALL_MIN_Y;
+    BALL_COLOR = Konva.Util.getRandomColor();
 
     constructor(props) {
         super(props);
@@ -79,6 +80,7 @@ export default class Game extends Component {
                     ballMinY={this.BALL_MIN_Y}
                     ballMaxX={this.BALL_MAX_X}
                     ballMaxY={this.BALL_MAX_Y}
+                    ballColor={this.BALL_COLOR}
                 />
                 <Paddle
                     fieldWidth={this.state.fieldWidth}
