@@ -1,7 +1,10 @@
 import React from "react";
 import { Rect } from "react-konva";
 
-export const Paddle = (props) => {
+const updatePaddleLocation = (mouseXCoord, paddleMaxX) =>
+    (mouseXCoord > paddleMaxX) ? paddleMaxX : mouseXCoord;
+
+const Paddle = (props) => {
     return (
         <Rect
             x={props.x}
@@ -13,3 +16,7 @@ export const Paddle = (props) => {
     );
 };
 
+export {
+    Paddle,
+    updatePaddleLocation
+};

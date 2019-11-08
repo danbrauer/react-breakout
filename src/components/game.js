@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import {Layer, Group} from "react-konva";
 import { Field } from "./field";
-import { Ball } from "./ball";
-import { Paddle } from "./paddle";
+import { Ball, updateBallLocation } from "./ball";
+import { Paddle, updatePaddleLocation } from "./paddle";
 import Konva from "konva";
 import Brick from "./brick";
 
@@ -51,71 +51,20 @@ export default class Game extends Component {
     _onMouseMove = ({ evt }) => {
         this.setState({
             ...this.state,
-            paddleX: this.paddleDetemineXCoord(evt.clientX)
+            paddleX: updatePaddleLocation(evt.clientX, this.PADDLE_MAX_X)
         });
     };
 
-    paddleDetemineXCoord = (mouseXCoord) =>
-        (mouseXCoord > this.PADDLE_MAX_X) ? this.PADDLE_MAX_X : mouseXCoord;
-
-    ballInvertYDirectionOnPaddleHit = (
-        ballX, ballY, deltaY,
-        paddleLeft, paddleRight, paddleTop, paddleBottom
-    ) => {
-        let newDeltaY = deltaY;
-        if (ballX >= paddleLeft && ballX <= paddleRight && ballY >= paddleBottom && ballY <= paddleTop ) {
-            newDeltaY = -deltaY;
-        }
-        return newDeltaY;
-    };
-
-    ballNewCoord = (val, delta, max, min) => {
-        let newVal = val + delta;
-        let newDelta = delta;
-
-        if (newVal > max || newVal < min) {
-            newDelta = -delta;
-        }
-
-        if (newVal < min) {
-            newVal = min - newVal;
-        }
-        if (newVal > max) {
-            newVal = newVal - (newVal - max);
-        }
-
-        return { val: newVal, delta: newDelta };
-    };
-
     ballAnimate = () => {
-        const { ballDirection, ballXCoord, ballYCoord } = this.state;
-
-        if (ballDirection.x !== 0 || ballDirection.y !== 0) {
-            const newYDir = this.ballInvertYDirectionOnPaddleHit(
-                ballXCoord, ballYCoord, ballDirection.y,
-                this.state.paddleX, (this.state.paddleX + this.PADDLE_WIDTH),
-                (this.state.paddleY + this.PADDLE_HEIGHT), this.state.paddleY
-            );
-
-            const newX = this.ballNewCoord(ballXCoord, ballDirection.x, this.BALL_MAX_X, this.BALL_MIN_X);
-            const newY = this.ballNewCoord(ballYCoord, newYDir, this.BALL_MAX_Y, this.BALL_MIN_Y);
-
+        if (this.state.ballDirection.x !== 0 || this.state.ballDirection.y !== 0) {
+            const newState = updateBallLocation(this.state, this.PADDLE_WIDTH, this.PADDLE_HEIGHT, this.BALL_MAX_X, this.BALL_MIN_X, this.BALL_MAX_Y, this.BALL_MIN_Y);
             this.setState({
                 ...this.state,
-                ballDirection: {
-                    x: newX.delta,
-                    y: newY.delta
-                },
-                ballXCoord: newX.val,
-                ballYCoord: newY.val
+                ...newState
             });
         }
-
         this.animationTimeout = setTimeout(this.ballAnimate, 50);
     };
-
-
-
 
     componentDidMount() {
         const x = this.state.paddleX;
