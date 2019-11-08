@@ -1,7 +1,7 @@
 import React from "react";
 import { Group, Rect } from "react-konva";
 
-export const Field = (props) => {
+const Field = (props) => {
     return (
         <Group>
             <Rect
@@ -22,3 +22,7 @@ export const Field = (props) => {
         </Group>
     );
 };
+
+export {
+    Field
+}
