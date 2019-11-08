@@ -1,16 +1,18 @@
 # Breakout in React
 
-I got a teensy bit of exposure to React at my day job, and thought it'd be interesting to learn it a bit more. 
+I have virtually no experience with modern web development, so thought I could learn a bit by trying to build a rudimentary version of Atari's Breakout, in React.  (Once upon a time, and a very long time ago indeed, I did this in Java Swing and remember it being not so hard.)
 
-I thought I'd do this by trying to build a rudimentary version of Atari's Breakout, because once upon a time, and a very long time ago indeed, I did this in Java Swing and remember it being not so hard.
+### Progress so far
+![](howItLooks.gif)
 
-I have effectively zero web front-end experience (I coded some JSPs many years ago, but that's about it) so this'll be interesting.
+### Process notes
 
-Process:
-* I took this code as a starting point: https://codesandbox.io/s/5qvyyyjrx (I had some prior code in Typescript but gave up on TS because I just don't know ebough about React to both learn it and convert to TS as I go.)
-* The code above had a field and bouncing balls.  I modified it to add a paddle, and have a ball respond to the paddle.
-* The code was actually a poor starting point in one regard: it didn't seem to adhere to React's idea of having state travel one way, and not have objects track their own state but rather have it be shared by the most common that needs to track its child's states.  So I had to lift a lot of states on the paddle and ball and field.
-* One that was done, adding rudimentary brick interaction was straightforward.
-* The code is at present a mess.  I miss Typescript.
+* I took this bouncy-ball code as a starting point: https://codesandbox.io/s/5qvyyyjrx, but had to rewrite most of it, though, to allow my components to interact.  
+  * In this example, the components kept their own states, which seems like a React anti-pattern.  From what tiny bit I read it seems state should travel only one way, from parent components to children.  If two children need to share state (for example by determining whether a ball hits a paddle) then that should be coordinated by some parent component.
+  * This example did show me how to render shapes, however, which I didn't know how to do (again, I basically have not done any web dev before.) 
+* I had initially intended to do this in Typescript but adding in the burden of getting React to work with Typescript was too much, especially since the focus here was to understand React.  I miss Typescript.
+* The code is at present a bit of a mess.  It's not tested, which is shameful.  Also its got lots of methods that take in lots of parameters, and that will get confusing before long.
 
-I may not continue with this exercise, even just this simple exercise, plus a tutorial I did beforehand, taught me a bit about React's handling of states.
+I may not continue with this exercise, but even just this taught me a lot.
+
+
