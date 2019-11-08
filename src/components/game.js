@@ -26,6 +26,9 @@ export default class Game extends Component {
     BALL_SPEED = 10;
     BALL_RADIUS = 10;
 
+    BRICK_WIDTH = 380;
+    BRICK_HEIGHT = 10;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -39,12 +42,7 @@ export default class Game extends Component {
                 y: 0
             },
 
-            brickWidth: 380,
-            brickHeight: 10,
-            bricks: [
-                { key: 1, x: 10, y: 10, color: Konva.Util.getRandomColor() },
-                { key: 2, x: 10, y: 20, color: Konva.Util.getRandomColor() }
-            ]
+            bricks: this.bricksInitialize()
         }
     };
 
@@ -62,9 +60,54 @@ export default class Game extends Component {
                 ...this.state,
                 ...newState
             });
+            this.ballBrickAnimate();
         }
         this.animationTimeout = setTimeout(this.ballAnimate, 50);
     };
+
+    bricksInitialize = () => {
+        return [
+            { key: 1, x: 10, y: 10, width: this.BRICK_WIDTH, height: this.BRICK_HEIGHT, color: Konva.Util.getRandomColor() },
+            { key: 2, x: 10, y: 20, width: this.BRICK_WIDTH, height: this.BRICK_HEIGHT, color: Konva.Util.getRandomColor() }
+        ];
+    };
+
+    // returns one brick, if collision occured; null otherwise
+    determineBallBrickCollision = (bricks, ballX, ballY) => {
+        for (var i=0; i < bricks.length; i++) {
+            const brick = bricks[i];
+            const brickLeft = brick.x;
+            const brickRight = brick.x + brick.width;
+            const brickTop = brick.y + brick.height;
+            const brickBottom = brick.y;
+            if (ballX >= brickLeft && ballX <= brickRight && ballY >= brickBottom && ballY  <= brickTop) {
+                // if found, break loop, return early
+                return brick;
+            }
+        }
+        return null;
+    };
+
+    ballBrickAnimate = () => {
+        const collidedBrick = this.determineBallBrickCollision(this.state.bricks, this.state.ballXCoord, this.state.ballYCoord);
+        if (collidedBrick) {
+            // update ball direction
+            const ballDirection = {
+                x: this.state.ballDirection.x,
+                y: -this.state.ballDirection.y
+            };
+
+            // remove brick from list (note filter creates a copy of the array, so state is not mutated here
+            const bricks = this.state.bricks.filter( (val) => val.key !== collidedBrick.key);
+
+            this.setState({
+                ...this.state,
+                bricks,
+                ballDirection
+            })
+        }
+    };
+    
 
     componentDidMount() {
         const x = this.state.paddleX;
@@ -90,14 +133,13 @@ export default class Game extends Component {
     }
 
 
-
     render() {
 
         const bricks = this.state.bricks.map(b => {
             return <Brick
                 key={b.key}
-                width={this.state.brickWidth}
-                height={this.state.brickHeight}
+                width={b.width}
+                height={b.height}
                 x={b.x}
                 y={b.y}
                 color={b.color}
