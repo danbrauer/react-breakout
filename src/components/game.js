@@ -25,7 +25,7 @@ export default class Game extends Component {
 
     BALL_COLOR = Konva.Util.getRandomColor();
     BALL_SPEED = 10;
-    BALL_RADIUS = 10;
+    BALL_RADIUS = 8;
     BALL_MIN_X = this.FIELD_MIN_X + this.BALL_RADIUS;
     BALL_MIN_Y = this.FIELD_MIN_Y + this.BALL_RADIUS;
     BALL_MAX_X = this.FIELD_MAX_X - this.BALL_RADIUS;
@@ -56,6 +56,7 @@ export default class Game extends Component {
         });
     };
 
+    // this is all a bit janky... but my purpose was not to make this precise but rather to learn a bit about react, so, I left it as is :)
     ballAnimate = () => {
         if (this.state.ballDirection.x !== 0 || this.state.ballDirection.y !== 0) {
             const newState = updateBallLocation(this.state, this.BALL_RADIUS, this.PADDLE_WIDTH, this.PADDLE_HEIGHT, this.BALL_MAX_X, this.BALL_MIN_X, this.BALL_MAX_Y, this.BALL_MIN_Y);
