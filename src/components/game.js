@@ -32,7 +32,10 @@ export default class Game extends Component {
     BALL_MAX_X = this.FIELD_MAX_X - this.BALL_RADIUS;
     BALL_MAX_Y = this.FIELD_MAX_Y - this.BALL_RADIUS;
 
-    INITIAL_STATE = {
+    INITIAL_STATE = () => {
+        const bricks = bricksInitialize();
+
+    return {
         paddleX: this.FIELD_MIN_X + 100,
         paddleY: this.FIELD_MAX_Y - this.PADDLE_OFFSET,
 
@@ -43,10 +46,11 @@ export default class Game extends Component {
             y: 0
         },
 
-        bricks: bricksInitialize(),
+        bricks,
 
         bricksBroken: 0,
         gameRestarts: 0
+    }
     };
 
     componentDidMount() {
@@ -76,16 +80,16 @@ export default class Game extends Component {
     gameEnd = (ballY) => {
         if (ballY >= this.BALL_MAX_Y) {
             this.componentWillUnmount();
-            this.setState({...this.INITIAL_STATE, gameRestarts: this.state.gameRestarts + 1});
+            this.setState({...this.INITIAL_STATE(), gameRestarts: this.state.gameRestarts + 1});
             // I am guessing react has a better way to do this...
-            window.alert("ACK! YOU LOST! CLICK TO START AGAIN!");
+            window.alert("OH NO YOU LOST! CLICK TO START AGAIN!");
             this.componentDidMount();
         }
     };
 
     constructor(props) {
         super(props);
-        this.state = this.INITIAL_STATE;
+        this.state = this.INITIAL_STATE();
     };
 
     _onMouseMove = ({ evt }) => {
