@@ -78,7 +78,7 @@ export default class Game extends Component {
             this.componentWillUnmount();
             this.setState({...this.INITIAL_STATE, gameRestarts: this.state.gameRestarts + 1});
             // I am guessing react has a better way to do this...
-            // window.alert("ACK! YOU LOST! CLICK TO START AGAIN!");
+            window.alert("ACK! YOU LOST! CLICK TO START AGAIN!");
             this.componentDidMount();
         }
     };
