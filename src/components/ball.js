@@ -2,11 +2,17 @@ import React from "react";
 import { Circle } from "react-konva";
 
 const ballInvertYDirectionOnPaddleHit = (
-    ballX, ballY, deltaY,
+    ballRadius, ballX, ballY, deltaY,
     paddleLeft, paddleRight, paddleTop, paddleBottom
 ) => {
+    const ballBottomY = ballY + ballRadius;
+    const ballTopY = ballY - ballRadius;
+
     let newDeltaY = deltaY;
-    if (ballX >= paddleLeft && ballX <= paddleRight && ballY >= paddleBottom && ballY <= paddleTop ) {
+    if (ballX >= paddleLeft && ballX <= paddleRight)
+        if (
+            (ballBottomY >= paddleBottom && ballBottomY <= paddleTop ) ||
+            (ballTopY >= paddleBottom && ballTopY <= paddleTop)) {
         newDeltaY = -deltaY;
     }
     return newDeltaY;
@@ -31,12 +37,12 @@ const ballNewCoord = (val, delta, max, min) => {
     return { val: newVal, delta: newDelta };
 };
 
-const updateBallLocation = ({ballDirection, ballXCoord, ballYCoord, paddleX, paddleY},
+const updateBallLocation = ({ballDirection, ballXCoord, ballYCoord, paddleX, paddleY}, ballRadius,
                          paddleWidth, paddleHeight,
                          ballMaxX, ballMinX, ballMaxY, ballMinY) => {
 
     const newYDir = ballInvertYDirectionOnPaddleHit(
-        ballXCoord, ballYCoord, ballDirection.y,
+        ballRadius, ballXCoord, ballYCoord, ballDirection.y,
         paddleX, (paddleX + paddleWidth),
         (paddleY + paddleHeight), paddleY
     );

@@ -58,7 +58,7 @@ export default class Game extends Component {
 
     ballAnimate = () => {
         if (this.state.ballDirection.x !== 0 || this.state.ballDirection.y !== 0) {
-            const newState = updateBallLocation(this.state, this.PADDLE_WIDTH, this.PADDLE_HEIGHT, this.BALL_MAX_X, this.BALL_MIN_X, this.BALL_MAX_Y, this.BALL_MIN_Y);
+            const newState = updateBallLocation(this.state, this.BALL_RADIUS, this.PADDLE_WIDTH, this.PADDLE_HEIGHT, this.BALL_MAX_X, this.BALL_MIN_X, this.BALL_MAX_Y, this.BALL_MIN_Y);
             this.setState({
                 ...this.state,
                 ...newState
