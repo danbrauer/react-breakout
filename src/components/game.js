@@ -73,6 +73,8 @@ export default class Game extends Component {
         if (ballY >= this.BALL_MAX_Y) {
             this.componentWillUnmount();
             this.setState(this.INITIAL_STATE);
+            // I am guessing react has a better way to do this...
+            window.alert("ACK! YOU LOST! CLICK TO START AGAIN!");
             this.componentDidMount();
         }
     };
@@ -89,7 +91,7 @@ export default class Game extends Component {
         });
     };
 
-    // this is all a bit janky... but my purpose was not to make this precise but rather to learn a bit about react, so, I left it as is :)
+    // the ball-brick collisions aren't very precise but they work for my purposes thus far...
     ballAnimate = () => {
         if (this.state.ballDirection.x !== 0 || this.state.ballDirection.y !== 0) {
             const newState = updateBallLocation(this.state, this.BALL_RADIUS, this.PADDLE_WIDTH, this.PADDLE_HEIGHT, this.BALL_MAX_X, this.BALL_MIN_X, this.BALL_MAX_Y, this.BALL_MIN_Y);
