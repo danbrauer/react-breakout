@@ -5,6 +5,7 @@ import { Ball, updateBallLocation } from "./ball";
 import { Paddle, updatePaddleLocation } from "./paddle";
 import Konva from "konva";
 import { Brick, bricksInitialize } from "./brick";
+import { Status } from "./gameStatus";
 
 export default class Game extends Component {
 
@@ -42,7 +43,10 @@ export default class Game extends Component {
             y: 0
         },
 
-        bricks: bricksInitialize()
+        bricks: bricksInitialize(),
+
+        bricksBroken: 0,
+        gameRestarts: 0
     };
 
     componentDidMount() {
@@ -72,9 +76,9 @@ export default class Game extends Component {
     gameEnd = (ballY) => {
         if (ballY >= this.BALL_MAX_Y) {
             this.componentWillUnmount();
-            this.setState(this.INITIAL_STATE);
+            this.setState({...this.INITIAL_STATE, gameRestarts: this.state.gameRestarts + 1});
             // I am guessing react has a better way to do this...
-            window.alert("ACK! YOU LOST! CLICK TO START AGAIN!");
+            // window.alert("ACK! YOU LOST! CLICK TO START AGAIN!");
             this.componentDidMount();
         }
     };
@@ -132,11 +136,13 @@ export default class Game extends Component {
 
             // remove brick from list (note filter creates a copy of the array, so state is not mutated here
             const bricks = this.state.bricks.filter( (val) => val.key !== collidedBrick.key);
+            const bricksBroken = this.state.bricksBroken + 1;
 
             this.setState({
                 ...this.state,
                 bricks,
-                ballDirection
+                ballDirection,
+                bricksBroken
             })
         }
     };
@@ -178,6 +184,7 @@ export default class Game extends Component {
                     height={this.PADDLE_HEIGHT}
                 />
                 <Group>{bricks}</Group>
+                <Status bricksBroken={this.state.bricksBroken} gameRestarts={this.state.gameRestarts} />
             </Layer>
         );
     }
