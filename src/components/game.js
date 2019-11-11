@@ -31,22 +31,55 @@ export default class Game extends Component {
     BALL_MAX_X = this.FIELD_MAX_X - this.BALL_RADIUS;
     BALL_MAX_Y = this.FIELD_MAX_Y - this.BALL_RADIUS;
 
+    INITIAL_STATE = {
+        paddleX: this.FIELD_MIN_X + 100,
+        paddleY: this.FIELD_MAX_Y - this.PADDLE_OFFSET,
+
+        ballXCoord: 0,
+        ballYCoord: 0,
+        ballDirection: {
+            x: 0,
+            y: 0
+        },
+
+        bricks: bricksInitialize()
+    };
+
+    componentDidMount() {
+        const x = this.FIELD_MIN_X + this.BALL_RADIUS;
+        const y = this.FIELD_MAX_Y - this.PADDLE_OFFSET;
+        const dirX = Math.floor(Math.random() * this.BALL_SPEED) + 1;
+        const dirY = -this.BALL_SPEED;
+
+        this.setState({
+            ...this.state,
+            ballDirection: {
+                x: dirX,
+                y: dirY
+            },
+            ballXCoord: x,
+            ballYCoord: y,
+        });
+
+        console.log("BALL STATE", this.state.ballDirection);
+        this.ballAnimate();
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.animationTimeout);
+    }
+
+    gameEnd = (ballY) => {
+        if (ballY >= this.BALL_MAX_Y) {
+            this.componentWillUnmount();
+            this.setState(this.INITIAL_STATE);
+            this.componentDidMount();
+        }
+    };
 
     constructor(props) {
         super(props);
-        this.state = {
-            paddleX: this.FIELD_MIN_X + 100,
-            paddleY: this.FIELD_MAX_Y - this.PADDLE_OFFSET,
-
-            ballXCoord: 0,
-            ballYCoord: 0,
-            ballDirection: {
-                x: 0,
-                y: 0
-            },
-
-            bricks: bricksInitialize()
-        }
+        this.state = this.INITIAL_STATE;
     };
 
     _onMouseMove = ({ evt }) => {
@@ -64,6 +97,7 @@ export default class Game extends Component {
                 ...this.state,
                 ...newState
             });
+            this.gameEnd(this.state.ballYCoord);
             this.ballBrickAnimate();
         }
         this.animationTimeout = setTimeout(this.ballAnimate, 50);
@@ -104,30 +138,6 @@ export default class Game extends Component {
             })
         }
     };
-
-
-    componentDidMount() {
-        const x = this.FIELD_MIN_X + this.BALL_RADIUS;
-        const y = this.state.paddleY;
-        const dirX = Math.floor(Math.random() * this.BALL_SPEED) + 1;
-        const dirY = -this.BALL_SPEED;
-
-        this.setState({
-            ...this.state,
-            ballDirection: {
-                x: dirX,
-                y: dirY
-            },
-            ballXCoord: x,
-            ballYCoord: y,
-        });
-
-        this.ballAnimate();
-    }
-
-    componentWillUnmount() {
-        clearTimeout(this.animationTimeout);
-    }
 
 
     render() {
