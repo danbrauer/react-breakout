@@ -20,7 +20,8 @@ export default class Game extends Component {
     PADDLE_HEIGHT = 10;
     PADDLE_OFFSET = 50;
     PADDLE_COLOR = Konva.Util.getRandomColor();
-    PADDLE_MAX_X = this.FIELD_WIDTH - this.FIELD_BORDER_WIDTH - this.PADDLE_WIDTH;
+    PADDLE_MIN_X = this.FIELD_MIN_X;
+    PADDLE_MAX_X = this.FIELD_MAX_X - this.PADDLE_WIDTH;
 
     BALL_COLOR = Konva.Util.getRandomColor();
     BALL_SPEED = 10;
@@ -51,7 +52,7 @@ export default class Game extends Component {
     _onMouseMove = ({ evt }) => {
         this.setState({
             ...this.state,
-            paddleX: updatePaddleLocation(evt.clientX, this.PADDLE_MAX_X)
+            paddleX: updatePaddleLocation(evt.clientX, this.PADDLE_MIN_X, this.PADDLE_MAX_X)
         });
     };
 
