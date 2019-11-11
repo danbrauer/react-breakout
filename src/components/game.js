@@ -35,8 +35,8 @@ export default class Game extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            paddleX: 0,
-            paddleY: this.FIELD_HEIGHT - this.PADDLE_OFFSET,
+            paddleX: this.FIELD_MIN_X + 100,
+            paddleY: this.FIELD_MAX_Y - this.PADDLE_OFFSET,
 
             ballXCoord: 0,
             ballYCoord: 0,
@@ -106,10 +106,10 @@ export default class Game extends Component {
 
 
     componentDidMount() {
-        const x = this.state.paddleX;
+        const x = this.FIELD_MIN_X + this.BALL_RADIUS;
         const y = this.state.paddleY;
-        const dirX = Math.floor(Math.random() * this.BALL_SPEED);
-        const dirY = this.BALL_SPEED - x;
+        const dirX = Math.floor(Math.random() * this.BALL_SPEED) + 1;
+        const dirY = -this.BALL_SPEED;
 
         this.setState({
             ...this.state,
