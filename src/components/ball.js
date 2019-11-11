@@ -21,8 +21,9 @@ const ballNewCoord = (val, delta, max, min) => {
     }
 
     if (newVal < min) {
-        newVal = min - newVal;
+        newVal = newVal + (min - newVal);
     }
+
     if (newVal > max) {
         newVal = newVal - (newVal - max);
     }

@@ -13,10 +13,10 @@ const Field = (props) => {
                 shadowBlur={2}
             />
             <Rect
-                x={2}
-                y={2}
-                width={props.width - props.borderWidth}
-                height={props.height - props.borderWidth}
+                x={props.borderWidth}
+                y={props.borderWidth}
+                width={props.width - (props.borderWidth * 2)}
+                height={props.height - (props.borderWidth * 2)}
                 fill="rgb(255,255,255)"
             />
         </Group>

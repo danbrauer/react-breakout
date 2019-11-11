@@ -11,20 +11,25 @@ export default class Game extends Component {
     FIELD_WIDTH = 400;
     FIELD_HEIGHT = 400;
     FIELD_BORDER_WIDTH = 4;
+    FIELD_MIN_X = this.FIELD_BORDER_WIDTH;
+    FIELD_MIN_Y = this.FIELD_BORDER_WIDTH;
+    FIELD_MAX_X = this.FIELD_WIDTH - this.FIELD_BORDER_WIDTH;
+    FIELD_MAX_Y = this.FIELD_HEIGHT - this.FIELD_BORDER_WIDTH;
 
     PADDLE_WIDTH = 60;
     PADDLE_HEIGHT = 10;
     PADDLE_OFFSET = 50;
     PADDLE_COLOR = Konva.Util.getRandomColor();
-    PADDLE_MAX_X = this.FIELD_WIDTH - this.PADDLE_WIDTH;
+    PADDLE_MAX_X = this.FIELD_WIDTH - this.FIELD_BORDER_WIDTH - this.PADDLE_WIDTH;
 
-    BALL_MIN_X = 12;
-    BALL_MIN_Y = 12;
-    BALL_MAX_X = this.FIELD_WIDTH - this.BALL_MIN_X;
-    BALL_MAX_Y = this.FIELD_HEIGHT - this.BALL_MIN_Y;
     BALL_COLOR = Konva.Util.getRandomColor();
-    BALL_SPEED = 15;
+    BALL_SPEED = 10;
     BALL_RADIUS = 10;
+    BALL_MIN_X = this.FIELD_MIN_X + this.BALL_RADIUS;
+    BALL_MIN_Y = this.FIELD_MIN_Y + this.BALL_RADIUS;
+    BALL_MAX_X = this.FIELD_MAX_X - this.BALL_RADIUS;
+    BALL_MAX_Y = this.FIELD_MAX_Y - this.BALL_RADIUS;
+
 
     constructor(props) {
         super(props);
