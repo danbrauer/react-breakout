@@ -2,6 +2,8 @@
 
 I have virtually no experience with modern web development, and thought I could learn a bit by trying to build a partial version of [Atari's Breakout](https://en.wikipedia.org/wiki/Breakout_(video_game)), in React.  (Once upon a time, I did this in Java Swing and remember it being not so hard...)
 
+You can play it at [thedanielbrauer.com/breakout](https://thedanielbrauer.com/breakout)
+
 ### Progress so far
 ![](ballBounceMon.gif)
 

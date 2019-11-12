@@ -11,7 +11,7 @@ const Status = (props) => {
             }} >
                 <tr>
                     <th colSpan={2}>
-                        Status
+                        <i>BREAKOUT</i>
                     </th>
                 </tr>
                 <tr>
