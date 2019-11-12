@@ -35,22 +35,22 @@ export default class Game extends Component {
     INITIAL_STATE = () => {
         const bricks = bricksInitialize();
 
-    return {
-        paddleX: this.FIELD_MIN_X + 100,
-        paddleY: this.FIELD_MAX_Y - this.PADDLE_OFFSET,
+        return {
+            paddleX: this.FIELD_MIN_X + 100,
+            paddleY: this.FIELD_MAX_Y - this.PADDLE_OFFSET,
 
-        ballXCoord: 0,
-        ballYCoord: 0,
-        ballDirection: {
-            x: 0,
-            y: 0
-        },
+            ballXCoord: 0,
+            ballYCoord: 0,
+            ballDirection: {
+                x: 0,
+                y: 0
+            },
 
-        bricks,
+            bricks,
 
-        bricksBroken: 0,
-        gameRestarts: 0
-    }
+            bricksBroken: 0,
+            gameRestarts: 0
+        }
     };
 
     componentDidMount() {
@@ -80,9 +80,9 @@ export default class Game extends Component {
     gameEnd = (ballY) => {
         if (ballY >= this.BALL_MAX_Y) {
             this.componentWillUnmount();
-            this.setState({...this.INITIAL_STATE(), gameRestarts: this.state.gameRestarts + 1});
             // I am guessing react has a better way to do this...
-            window.alert("OH NO YOU LOST! CLICK TO START AGAIN!");
+            // window.alert("OH NO YOU LOST! CLICK TO START AGAIN!");
+            this.setState({...this.INITIAL_STATE(), gameRestarts: this.state.gameRestarts + 1});
             this.componentDidMount();
         }
     };
