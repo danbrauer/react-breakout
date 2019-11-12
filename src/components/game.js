@@ -69,7 +69,6 @@ export default class Game extends Component {
             ballYCoord: y,
         });
 
-        console.log("BALL STATE", this.state.ballDirection);
         this.ballAnimate();
     }
 
@@ -97,6 +96,18 @@ export default class Game extends Component {
             ...this.state,
             paddleX: updatePaddleLocation(evt.clientX, this.PADDLE_MIN_X, this.PADDLE_MAX_X)
         });
+    };
+
+    _onTouchMove = ({ evt }) => {
+        // i'm guessing there are a lot of touch edge-cases I'm missing here but...
+        // this works, and I added it in under ten minutes, and I'm impressed that
+        // browser tech allowed me to add this in so easily. wow.
+        if (evt.touches && evt.touches.length > 0) {
+            this.setState({
+                ...this.state,
+                paddleX: updatePaddleLocation(evt.touches[0].clientX, this.PADDLE_MIN_X, this.PADDLE_MAX_X)
+            });
+        }
     };
 
     // the ball-brick collisions aren't very precise but they work for my purposes thus far...
@@ -168,6 +179,7 @@ export default class Game extends Component {
         return (
             <Layer
                 onMouseMove={(e) => this._onMouseMove(e)}
+                onTouchMove={(e) => this._onTouchMove(e)}
             >
                 <Field
                     width={this.FIELD_WIDTH}
