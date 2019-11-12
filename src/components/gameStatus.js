@@ -49,9 +49,8 @@ const Status = (props) => {
                 </tr>
                 <tr>
                     <td colSpan={5}>
-                        <p>As a small, personal challenge, I wanted to build something in <a href="https://reactjs.org/" target="_blank" rel="noopener noreferrer"> React</a>.  I spend most of my time on back-end work, and what front-end experience I do have is old and mostly not browser-based, so I was starting almost from scratch.</p>
-                        <p>I chose to build a version of <a href="https://en.wikipedia.org/wiki/Breakout_(video_game)" target="_blank" rel="noopener noreferrer">Breakout</a> because I hazily remembered doing this a long time ago in <a href="https://en.wikipedia.org/wiki/Swing_(Java)" target="_blank" rel="noopener noreferrer">Java Swing</a>, and that it was a good exercise.</p>
-                        <p>The end result here is not remotely polished, and <a href="https://github.com/danbrauer/react-breakout" target="_blank" rel="noopener noreferrer">its code</a> is shamefully untested.  But I wrote it pretty quickly and did learn about React and its state management, which was the point.</p>
+                        <p>As a small, personal challenge, I wanted to build a web app in <a href="https://reactjs.org/" target="_blank" rel="noopener noreferrer"> React</a>.  I spend most of my time on back-end work, and what front-end experience I do have is old and mostly not browser-based, so I was starting almost from scratch.</p>
+                        <p>I chose to build a version of <a href="https://en.wikipedia.org/wiki/Breakout_(video_game)" target="_blank" rel="noopener noreferrer">Breakout</a> because I hazily remembered doing this a long time ago in <a href="https://en.wikipedia.org/wiki/Swing_(Java)" target="_blank" rel="noopener noreferrer">Java Swing</a>, and that it was a good exercise.</p> 
                         <p>The source code, plus more technical details, are on <a href="https://github.com/danbrauer/react-breakout" target="_blank" rel="noopener noreferrer">Github</a>.</p>
                     </td>
                 </tr>
